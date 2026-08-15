@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nook Sitters Calgary | Nash McGregor - Babysitting & Tutoring</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            nook: {
+              50: '#fdfbf7',
+              100: '#f7f2e7',
+              200: '#ebdcc3',
+              300: '#ddc298',
+              400: '#cda16a',
+              500: '#c18848',
+              600: '#b2723c',
+              700: '#945833',
+              800: '#784730',
+              900: '#623b2a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+  </style>
+</head>
+<body class="bg-[#FAF8F5] text-slate-800 antialiased selection:bg-amber-200 selection:text-amber-900">
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
+
+  <!-- Announcement Bar -->
+  <div class="bg-slate-900 text-amber-300 text-xs py-2.5 px-4 text-center font-bold flex items-center justify-center gap-2">
+    <span>🇨🇦 Calgary’s Premier Solo Babysitting & Elementary Tutoring Service</span>
+    <span class="hidden md:inline-block border-l border-slate-700 pl-2 text-slate-300">Nash McGregor • <a href="tel:4038991550" class="underline text-amber-300 hover:text-white">📱 403-899-1550</a> • Red Cross Certified</span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sticky top-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-stone-200/80 transition-all">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      <!-- Logo -->
+      <a href="javascript:void(0)" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex items-center gap-2.5 group flex-shrink-0">
+        <div class="w-10 h-10 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xl shadow-md group-hover:scale-105 transition-transform">
+          N
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-extrabold tracking-tight text-slate-900 leading-none">Nook<span class="text-amber-600">Sitters</span></span>
+          <span class="text-[10px] font-bold tracking-widest text-slate-400 uppercase">Calgary • By Nash McGregor</span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden lg:flex items-center gap-7 font-semibold text-sm text-slate-600">
+        <button onclick="scrollToSection('about')" class="hover:text-amber-600 transition whitespace-nowrap focus:outline-none">About Nash</button>
+        <button onclick="scrollToSection('tutoring')" class="hover:text-amber-600 transition flex items-center gap-1.5 whitespace-nowrap focus:outline-none">
+          <span>Tutoring</span>
+          <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2 py-0.5 rounded-full uppercase">$20/hr or +$10 add-on</span>
+        </button>
+        <button onclick="scrollToSection('hours')" class="hover:text-amber-600 transition whitespace-nowrap focus:outline-none">Hours</button>
+        <button onclick="scrollToSection('certifications')" class="hover:text-amber-600 transition whitespace-nowrap focus:outline-none">Red Cross Certs</button>
+        <button onclick="scrollToSection('calculator')" class="hover:text-amber-600 transition whitespace-nowrap focus:outline-none">Rate Calculator</button>
+        <button onclick="scrollToSection('faq')" class="hover:text-amber-600 transition whitespace-nowrap focus:outline-none">FAQ</button>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="hidden lg:flex items-center gap-3 flex-shrink-0">
+        <button onclick="openOwnerPortalLogin()" class="text-xs font-bold text-slate-600 hover:text-slate-900 px-3 py-2 rounded-xl transition flex items-center gap-1.5 bg-stone-100 border border-stone-200">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-600"></i>
+          <span>Owner Portal</span>
+        </button>
+        <a href="tel:4038991550" class="text-xs font-bold text-slate-800 hover:text-amber-600 flex items-center gap-1.5 px-3.5 py-2 rounded-xl transition border border-stone-200 bg-white shadow-sm hover:border-amber-300">
+          <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-600"></i>
+          <span>403-899-1550</span>
+        </a>
+        <button onclick="openBookingModal('Care')" class="bg-slate-900 hover:bg-slate-800 text-white px-5 py-2.5 rounded-xl text-sm font-bold shadow-sm hover:shadow transition flex items-center gap-2">
+          <i data-lucide="calendar" class="w-4 h-4 text-amber-400"></i>
+          <span>Book Nash Directly</span>
+        </button>
+      </div>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="mobileMenuBtn" onclick="toggleMobileMenu()" class="lg:hidden p-2.5 text-slate-700 hover:bg-stone-200/60 rounded-xl transition flex items-center justify-center focus:outline-none" aria-label="Toggle Menu">
+        <i id="menuIcon" data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Dropdown Menu -->
+    <div id="mobileMenu" class="hidden lg:hidden border-b border-stone-200 bg-white/95 backdrop-blur-md px-6 py-6 space-y-4 shadow-xl">
+      <button onclick="scrollToSection('about')" class="block w-full text-left font-semibold text-slate-700 hover:text-amber-600 transition">About Nash McGregor</button>
+      <button onclick="scrollToSection('tutoring')" class="flex items-center justify-between w-full text-left font-semibold text-slate-700 hover:text-amber-600 transition">
+        <span>Elementary Tutoring</span>
+        <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2 py-0.5 rounded-full">$20/hr</span>
+      </button>
+      <button onclick="scrollToSection('hours')" class="block w-full text-left font-semibold text-slate-700 hover:text-amber-600 transition">Hours of Operation</button>
+      <button onclick="scrollToSection('certifications')" class="block w-full text-left font-semibold text-slate-700 hover:text-amber-600 transition">Red Cross Certifications</button>
+      <button onclick="scrollToSection('calculator')" class="block w-full text-left font-semibold text-slate-700 hover:text-amber-600 transition">Rate Calculator</button>
+      <button onclick="scrollToSection('faq')" class="block w-full text-left font-semibold text-slate-700 hover:text-amber-600 transition">FAQ</button>
+      
+      <div class="pt-2 flex items-center gap-3">
+        <a href="tel:4038991550" class="flex-1 text-center text-xs font-bold text-slate-800 py-3 border border-stone-200 rounded-xl bg-stone-50 hover:bg-stone-100 flex items-center justify-center gap-1.5">
+          <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-600"></i>
+          <span>Call 403-899-1550</span>
+        </a>
+        <a href="mailto:nashnooksitters@gmail.com" class="flex-1 text-center text-xs font-bold text-slate-800 py-3 border border-stone-200 rounded-xl bg-stone-50 hover:bg-stone-100 flex items-center justify-center gap-1.5">
+          <i data-lucide="mail" class="w-3.5 h-3.5 text-amber-600"></i>
+          <span>Email Nash</span>
+        </a>
+      </div>
+
+      <div class="pt-2 border-t border-stone-100 flex flex-col gap-2.5">
+        <button onclick="toggleMobileMenu(); openBookingModal('Care');" class="w-full bg-slate-900 hover:bg-slate-800 text-white py-3 rounded-xl font-bold transition flex items-center justify-center gap-2">
+          <i data-lucide="heart" class="w-4 h-4 text-amber-400"></i>
+          <span>Book Babysitting ($22/hr)</span>
+        </button>
+        <button onclick="toggleMobileMenu(); openOwnerPortalLogin();" class="w-full bg-stone-100 hover:bg-stone-200 text-slate-900 py-3 rounded-xl font-bold transition flex items-center justify-center gap-2 border border-stone-300">
+          <i data-lucide="shield-check" class="w-4 h-4 text-amber-600"></i>
+          <span>Owner Portal</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden pt-12 pb-20 md:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        
+        <!-- Hero Text -->
+        <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 bg-amber-100/80 border border-amber-300/60 px-3.5 py-1.5 rounded-full text-xs font-extrabold text-amber-900 shadow-sm">
+            <span class="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Private Calgary Sitter & Elementary Tutor
+          </div>
+          
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.12]">
+            Dedicated Calgary childcare & tutoring for <span class="text-amber-600 underline decoration-amber-300 decoration-wavy decoration-2">kids ages 10 & under</span>.
+          </h1>
+          
+          <p class="text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            I’m <strong>Nash McGregor</strong>, your go-to boutique sitter and tutor in Calgary. You get 1-on-1 personal care directly from me—no agency middleman, no random substitutes. Just high-quality Red Cross certified babysitting and elementary math & reading tutoring!
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="pt-4 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+            <button onclick="openBookingModal('Care')" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-8 py-4 rounded-2xl transition shadow-lg flex items-center justify-center gap-2">
+              <i data-lucide="heart" class="w-5 h-5 fill-slate-950"></i>
+              <span>Book Babysitting ($22/hr)</span>
+            </button>
+            
+            <button onclick="openBookingModal('Tutoring')" class="w-full sm:w-auto bg-white border border-stone-300 hover:bg-stone-50 text-slate-900 font-bold px-8 py-4 rounded-2xl transition shadow-sm text-center flex items-center justify-center gap-2">
+              <i data-lucide="book-open" class="w-5 h-5 text-amber-600"></i>
+              <span>Book Tutoring ($20/hr)</span>
+            </button>
+          </div>
+
+          <!-- Quick Contact Badges -->
+          <div class="pt-6 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-xs font-bold text-slate-500">
+            <div class="flex items-center gap-2">
+              <i data-lucide="award" class="w-4 h-4 text-rose-600"></i>
+              <span>Red Cross Babysitting Certified</span>
+            </div>
+            <a href="tel:4038991550" class="flex items-center gap-2 hover:text-slate-900 transition text-slate-700">
+              <i data-lucide="phone" class="w-4 h-4 text-emerald-600"></i>
+              <span>403-899-1550</span>
+            </a>
+            <a href="mailto:nashnooksitters@gmail.com" class="flex items-center gap-2 hover:text-slate-900 transition text-slate-700">
+              <i data-lucide="mail" class="w-4 h-4 text-amber-600"></i>
+              <span>nashnooksitters@gmail.com</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Card: Nash McGregor -->
+        <div class="lg:col-span-5 relative">
+          <div class="relative mx-auto max-w-md lg:max-w-none">
+            <div class="absolute -top-6 -left-6 w-72 h-72 bg-amber-200/50 rounded-full blur-3xl -z-10"></div>
+            <div class="absolute -bottom-6 -right-6 w-72 h-72 bg-rose-100/50 rounded-full blur-3xl -z-10"></div>
+
+            <div class="bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-stone-200 space-y-6">
+              <div class="flex items-center justify-between border-b border-stone-100 pb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-14 h-14 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-2xl shadow-md">
+                    NM
+                  </div>
+                  <div>
+                    <h3 class="font-extrabold text-slate-900 text-lg">Nash McGregor</h3>
+                    <p class="text-xs text-amber-700 font-bold">Owner & Solo Caregiver</p>
+                  </div>
+                </div>
+                <span class="bg-rose-100 text-rose-800 text-[11px] font-black px-2.5 py-1 rounded-full border border-rose-200">
+                  Red Cross Certified
+                </span>
+              </div>
+
+              <!-- Highlights -->
+              <div class="space-y-3 text-xs text-slate-600">
+                <div class="flex items-center gap-2.5 bg-stone-50 p-3 rounded-xl border border-stone-200">
+                  <i data-lucide="award" class="w-4 h-4 text-rose-600 flex-shrink-0"></i>
+                  <span>Official <strong>Red Cross Babysitting Certification</strong></span>
+                </div>
+                <div class="flex items-center gap-2.5 bg-stone-50 p-3 rounded-xl border border-stone-200">
+                  <i data-lucide="graduation-cap" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
+                  <span>Elementary Tutoring (<strong>$20/hr standalone or +$10/hr add-on</strong>)</span>
+                </div>
+                <div class="flex items-center gap-2.5 bg-stone-50 p-3 rounded-xl border border-stone-200">
+                  <i data-lucide="clock" class="w-4 h-4 text-emerald-600 flex-shrink-0"></i>
+                  <span>Available 7 Days a Week in Calgary</span>
+                </div>
+              </div>
+
+              <p class="text-xs text-slate-600 italic leading-relaxed bg-amber-50/70 p-3.5 rounded-xl border border-amber-200/60">
+                "Nash is the only sitter we trust in NW Calgary now. He brings great energy, keeps our 7-year-old on track with reading, and makes bedtime seamless!"
+                <span class="block text-[10px] font-bold text-slate-800 not-italic mt-1">— The Patterson Family</span>
+              </p>
+
+              <div class="pt-2 flex gap-3">
+                <button onclick="openBookingModal('Care')" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs transition shadow-sm text-center">
+                  Book Babysitting
+                </button>
+                <button onclick="openBookingModal('Tutoring')" class="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl text-xs transition shadow-sm text-center">
+                  Book Tutoring
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About Nash McGregor Section -->
+  <section id="about" class="py-20 bg-stone-100/70 border-y border-stone-200 scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-700">Boutique Personal Care</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">Meet Nash McGregor</h2>
+        <p class="text-slate-600 text-sm mt-2">Providing high-quality, personal babysitting and tutoring directly to Calgary families.</p>
+      </div>
+
+      <!-- Sitter Profile Detail Card -->
+      <div class="max-w-4xl mx-auto bg-white border border-stone-200 rounded-3xl p-6 sm:p-10 shadow-xl grid md:grid-cols-12 gap-8 items-center">
+        <div class="md:col-span-5 text-center flex flex-col items-center">
+          <div class="w-32 h-32 rounded-3xl bg-amber-500 text-slate-950 font-black text-4xl flex items-center justify-center shadow-lg mb-4">
+            NM
+          </div>
+          <h3 class="text-2xl font-black text-slate-900">Nash McGregor</h3>
+          <p class="text-xs font-bold text-amber-700">Calgary, AB • Private Caregiver</p>
+          <div class="flex items-center gap-1 text-amber-400 my-2">
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <span class="text-xs font-bold text-slate-800 ml-1">5.0 Star Rating</span>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-1.5 mt-2 mb-4">
+            <span class="text-[10px] bg-rose-50 text-rose-800 font-bold px-2.5 py-1 rounded-md border border-rose-200">Red Cross Certified</span>
+            <span class="text-[10px] bg-amber-50 text-amber-800 font-bold px-2.5 py-1 rounded-md border border-amber-200">Elementary Tutor</span>
+            <span class="text-[10px] bg-stone-100 text-slate-700 font-bold px-2.5 py-1 rounded-md border border-stone-200">Ages 4–10</span>
+          </div>
+
+          <!-- Direct Contact Card -->
+          <div class="w-full bg-stone-50 border border-stone-200 rounded-2xl p-3 text-left space-y-2">
+            <a href="tel:4038991550" class="flex items-center gap-2 text-xs text-slate-800 font-bold hover:text-amber-600 transition">
+              <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-600 flex-shrink-0"></i>
+              <span>403-899-1550</span>
+            </a>
+            <a href="mailto:nashnooksitters@gmail.com" class="flex items-center gap-2 text-xs text-slate-800 font-bold hover:text-amber-600 transition truncate">
+              <i data-lucide="mail" class="w-3.5 h-3.5 text-amber-600 flex-shrink-0"></i>
+              <span class="truncate">nashnooksitters@gmail.com</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="md:col-span-7 space-y-4">
+          <h4 class="text-lg font-bold text-slate-900">Hi Calgary Families!</h4>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            I run Nook Sitters as a dedicated solo caregiver. When you book a spot on my schedule, you get me directly—someone who knows your family, respects your household routine, and brings a positive, energetic vibe every single time.
+          </p>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            I am fully certified through the <strong>Red Cross Babysitting Program</strong>, trained in child safety, emergency first aid, and structured playtime. For kids ages 10 and under, I also offer dedicated elementary tutoring for math, reading, and homework support!
+          </p>
+
+          <div class="grid grid-cols-3 gap-3 pt-2">
+            <div class="bg-stone-50 p-3 rounded-xl border border-stone-200">
+              <span class="block text-[10px] font-bold text-slate-400 uppercase">Babysitting</span>
+              <span class="text-xs font-bold text-slate-800">$22 / hr</span>
+            </div>
+            <div class="bg-stone-50 p-3 rounded-xl border border-stone-200">
+              <span class="block text-[10px] font-bold text-slate-400 uppercase">Tutoring Only</span>
+              <span class="text-xs font-bold text-amber-700">$20 / hr</span>
+            </div>
+            <div class="bg-stone-50 p-3 rounded-xl border border-stone-200">
+              <span class="block text-[10px] font-bold text-slate-400 uppercase">Tutoring Add-On</span>
+              <span class="text-xs font-bold text-emerald-700">+$10 / hr</span>
+            </div>
+          </div>
+
+          <div class="pt-2 flex gap-3">
+            <button onclick="openBookingModal('Care')" class="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl text-xs transition shadow-sm text-center">
+              Book Babysitting
+            </button>
+            <button onclick="openBookingModal('Tutoring')" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs transition shadow-sm text-center">
+              Book Tutoring
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TUTORING SECTION (Ages 10 & Below) -->
+  <section id="tutoring" class="py-24 bg-white scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="bg-amber-100 text-amber-900 text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+          $20/hr Standalone • +$10/hr Add-on
+        </span>
+        <h2 class="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mt-3">
+          Elementary Tutoring (Ages 10 & Under)
+        </h2>
+        <p class="text-slate-600 text-sm sm:text-base mt-3 max-w-2xl mx-auto leading-relaxed">
+          Need academic support? Book standalone tutoring for <strong>$20/hour</strong> or add dedicated elementary tutoring to any sitting session for just <strong>+$10/hour</strong>!
+        </p>
+      </div>
+
+      <!-- Subjects Grid -->
+      <div class="grid md:grid-cols-4 gap-6 mb-16">
+        
+        <div class="bg-stone-50 border border-stone-200 p-6 rounded-2xl hover:border-amber-400 transition group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="calculator" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Primary Math & Logic</h3>
+          <span class="text-[10px] font-bold text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-md">Grades K–5</span>
+          <p class="text-xs text-slate-600 mt-3 leading-relaxed">Addition, subtraction, multiplication tables, word problems, and math games that make numbers fun.</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 p-6 rounded-2xl hover:border-amber-400 transition group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="book-open-check" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Reading & Literacy</h3>
+          <span class="text-[10px] font-bold text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-md">Early Reading</span>
+          <p class="text-xs text-slate-600 mt-3 leading-relaxed">Phonics, vocabulary expansion, guided reading, and comprehension for primary schoolers.</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 p-6 rounded-2xl hover:border-amber-400 transition group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="pencil" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Homework Assistance</h3>
+          <span class="text-[10px] font-bold text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-md">Calgary Curriculum</span>
+          <p class="text-xs text-slate-600 mt-3 leading-relaxed">Helping kids complete daily homework without tears or frustration before bedtime.</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 p-6 rounded-2xl hover:border-amber-400 transition group">
+          <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+            <i data-lucide="brain" class="w-6 h-6"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Spelling & Writing</h3>
+          <span class="text-[10px] font-bold text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-md">Ages 5–10</span>
+          <p class="text-xs text-slate-600 mt-3 leading-relaxed">Pencil grip, sentence building, creative writing prompts, and spelling list practice.</p>
+        </div>
+
+      </div>
+
+      <!-- Combo Banner -->
+      <div class="bg-slate-900 text-white rounded-3xl p-8 sm:p-12 border border-slate-800 relative overflow-hidden">
+        <div class="relative z-10 max-w-2xl space-y-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Flexible Options</span>
+          <h3 class="text-2xl sm:text-4xl font-black">Standalone Tutoring or Sitting Combo</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Book <strong>Standalone Tutoring for $20/hr</strong>, or add homework help to your sitting session for just <strong>+$10/hr extra ($32/hr total)</strong>. Productive kids, easy evenings!
+          </p>
+          <div class="pt-2 flex flex-wrap gap-3">
+            <button onclick="openBookingModal('Tutoring')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-6 py-3 rounded-xl transition text-xs sm:text-sm shadow-md">
+              Book Standalone Tutoring ($20/hr)
+            </button>
+            <button onclick="openBookingModal('Combo')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-6 py-3 rounded-xl transition text-xs sm:text-sm border border-slate-700">
+              Book Sitting + Tutoring Combo
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Hours of Operation Section -->
+  <section id="hours" class="py-20 bg-stone-100/80 border-t border-stone-200 scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-700">Weekly Schedule</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">Hours of Operation</h2>
+        <p class="text-slate-600 text-sm mt-2">Serving Calgary families 7 days a week during the following time blocks.</p>
+      </div>
+
+      <div class="max-w-3xl mx-auto bg-white border border-stone-200 rounded-3xl p-6 sm:p-8 shadow-md">
+        <div class="grid sm:grid-cols-2 gap-4 text-sm font-semibold">
+          
+          <div class="bg-stone-50 p-4 rounded-2xl border border-stone-200 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <i data-lucide="calendar-days" class="w-4 h-4 text-amber-600"></i>
+              <span class="text-slate-800">Monday – Thursday</span>
+            </div>
+            <span class="text-xs font-extrabold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg">4:30 PM – 8:30 PM</span>
+          </div>
+
+          <div class="bg-stone-50 p-4 rounded-2xl border border-stone-200 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <i data-lucide="calendar-days" class="w-4 h-4 text-amber-600"></i>
+              <span class="text-slate-800">Friday</span>
+            </div>
+            <span class="text-xs font-extrabold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg">1:00 PM – 9:30 PM</span>
+          </div>
+
+          <div class="bg-stone-50 p-4 rounded-2xl border border-stone-200 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <i data-lucide="calendar-days" class="w-4 h-4 text-amber-600"></i>
+              <span class="text-slate-800">Saturday</span>
+            </div>
+            <span class="text-xs font-extrabold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg">12:00 PM – 9:30 PM</span>
+          </div>
+
+          <div class="bg-stone-50 p-4 rounded-2xl border border-stone-200 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <i data-lucide="calendar-days" class="w-4 h-4 text-amber-600"></i>
+              <span class="text-slate-800">Sunday</span>
+            </div>
+            <span class="text-xs font-extrabold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg">12:00 PM – 8:30 PM</span>
+          </div>
+
+        </div>
+
+        <div class="mt-6 pt-4 border-t border-stone-100 text-center">
+          <p class="text-xs text-slate-500">Need custom timing outside these hours? Feel free to call/text <a href="tel:4038991550" class="font-bold text-slate-800 underline">403-899-1550</a> to discuss availability!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Rate Estimator -->
+  <section id="calculator" class="py-24 bg-white border-t border-stone-200 scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-12 items-center">
+        
+        <div class="lg:col-span-5 space-y-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-700">Transparent CAD Pricing</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Rate Calculator</h2>
+          <p class="text-slate-600 text-sm leading-relaxed">
+            Calculate your exact session price below based on service type, start/end times, and number of children.
+          </p>
+
+          <div class="space-y-3 pt-2">
+            <div class="flex items-start gap-3">
+              <div class="p-2 rounded-lg bg-amber-100 text-amber-800 font-bold text-xs mt-0.5">🧸</div>
+              <div>
+                <h4 class="text-sm font-bold text-slate-900">Standard Babysitting</h4>
+                <p class="text-xs text-slate-500">$22/hr base rate in Calgary.</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="p-2 rounded-lg bg-blue-100 text-blue-800 font-bold text-xs mt-0.5">📚</div>
+              <div>
+                <h4 class="text-sm font-bold text-slate-900">Standalone Tutoring</h4>
+                <p class="text-xs text-slate-500">$20/hr base rate for dedicated learning (Ages ≤10).</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="p-2 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-xs mt-0.5">✨</div>
+              <div>
+                <h4 class="text-sm font-bold text-slate-900">Babysitting + Tutoring Combo</h4>
+                <p class="text-xs text-slate-500">$32/hr total ($22/hr sitting + $10/hr tutoring add-on).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Calculator Box -->
+        <div class="lg:col-span-7 bg-stone-50 border border-stone-200 rounded-3xl p-6 sm:p-8 shadow-lg">
+          <div class="space-y-6">
+            
+            <!-- Service Selection Radio -->
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Select Service Type</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <label class="flex flex-col p-3 bg-white border border-stone-200 rounded-xl cursor-pointer hover:border-amber-400 transition">
+                  <div class="flex items-center gap-2">
+                    <input type="radio" name="calcService" value="care_only" onchange="updateCalculator()" class="text-amber-600 focus:ring-amber-500">
+                    <span class="text-xs font-bold text-slate-900">Babysitting</span>
+                  </div>
+                  <span class="text-[10px] text-slate-500 font-semibold mt-1">$22 / hr</span>
+                </label>
+
+                <label class="flex flex-col p-3 bg-white border border-stone-200 rounded-xl cursor-pointer hover:border-amber-400 transition">
+                  <div class="flex items-center gap-2">
+                    <input type="radio" name="calcService" value="tutoring_only" onchange="updateCalculator()" class="text-amber-600 focus:ring-amber-500">
+                    <span class="text-xs font-bold text-slate-900">Tutoring Only</span>
+                  </div>
+                  <span class="text-[10px] text-amber-700 font-semibold mt-1">$20 / hr</span>
+                </label>
+
+                <label class="flex flex-col p-3 bg-white border border-stone-200 rounded-xl cursor-pointer hover:border-amber-400 transition">
+                  <div class="flex items-center gap-2">
+                    <input type="radio" name="calcService" value="combo" onchange="updateCalculator()" class="text-amber-600 focus:ring-amber-500" checked>
+                    <span class="text-xs font-bold text-slate-900">Sitting + Tutoring</span>
+                  </div>
+                  <span class="text-[10px] text-emerald-700 font-semibold mt-1">$32 / hr ($22+$10)</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Children Slider -->
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label class="text-sm font-bold text-slate-800">Number of Children</label>
+                <span id="kidsValue" class="text-sm font-extrabold text-amber-700 bg-amber-100 px-3 py-1 rounded-full">1 Child</span>
+              </div>
+              <input type="range" id="kidsSlider" min="1" max="4" value="1" oninput="updateCalculator()" class="w-full accent-amber-600 h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer">
+            </div>
+
+            <!-- Start Time & End Time Inputs for Calculator -->
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Start Time</label>
+                <input type="time" id="calcStartTime" value="17:00" onchange="updateCalculator()" class="w-full bg-white border border-stone-200 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">End Time</label>
+                <input type="time" id="calcEndTime" value="20:00" onchange="updateCalculator()" class="w-full bg-white border border-stone-200 rounded-xl px-4 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+              </div>
+            </div>
+
+            <!-- Duration Display -->
+            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-stone-200 text-xs font-bold">
+              <span class="text-slate-500 uppercase">Calculated Hours:</span>
+              <span id="calcDurationText" class="text-slate-900 font-extrabold text-sm">3.0 Hours</span>
+            </div>
+
+            <!-- Output Card -->
+            <div class="bg-slate-900 text-white p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div>
+                <span class="text-xs text-slate-400 uppercase font-bold tracking-wider">Estimated Total</span>
+                <div class="flex items-baseline gap-2">
+                  <span id="calcTotal" class="text-3xl font-black text-amber-400">$96.00</span>
+                  <span class="text-xs text-slate-400">CAD</span>
+                </div>
+                <p id="calcRateBreakdown" class="text-xs text-slate-400 mt-1">$32/hr rate ($22 base + $10 tutoring add-on)</p>
+              </div>
+
+              <button onclick="openBookingModal('Calculated')" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 px-6 py-3 rounded-xl font-bold text-sm transition shadow-md">
+                Lock In Estimate
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Red Cross Certification Section -->
+  <section id="certifications" class="py-20 bg-stone-100/70 border-t border-stone-200 scroll-mt-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-rose-600">Official Standards</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">Red Cross Certified Care</h2>
+        <p class="text-slate-600 text-sm mt-3">Trained specifically to handle child safety, first aid, and structured care routines.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div class="bg-white p-6 rounded-2xl border border-stone-200">
+          <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold mb-4">
+            <i data-lucide="award" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-2">Red Cross Babysitting Course</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Official certification covering child supervision, emergency protocol, safety rules, and injury prevention.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-stone-200">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold mb-4">
+            <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-2">First Aid Readiness</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Trained to respond calmly and effectively to minor injuries, cuts, bumps, and safety scenarios.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl border border-stone-200">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold mb-4">
+            <i data-lucide="thumbs-up" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-2">Calgary Family Approved</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Active hands-on experience caring for local kids across Calgary neighborhoods.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-20 bg-white border-t border-stone-200 scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-700">FAQ</span>
+        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight mt-1">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-stone-50 border border-stone-200 rounded-2xl p-5 shadow-sm">
+          <h3 class="font-bold text-slate-900 text-sm mb-2">Who will actually be babysitting or tutoring my kids?</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Me (Nash McGregor) directly! I am a solo caregiver, so you never have to worry about strangers or random substitutes coming to your house.</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 rounded-2xl p-5 shadow-sm">
+          <h3 class="font-bold text-slate-900 text-sm mb-2">What are your hours of operation?</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            • <strong>Mon–Thu:</strong> 4:30 PM – 8:30 PM<br/>
+            • <strong>Friday:</strong> 1:00 PM – 9:30 PM<br/>
+            • <strong>Saturday:</strong> 12:00 PM – 9:30 PM<br/>
+            • <strong>Sunday:</strong> 12:00 PM – 8:30 PM
+          </p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 rounded-2xl p-5 shadow-sm">
+          <h3 class="font-bold text-slate-900 text-sm mb-2">What happens after I submit a booking request?</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Once you fill out the booking form, I will send you an email directly to confirm if I am available for your requested date and time.</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 rounded-2xl p-5 shadow-sm">
+          <h3 class="font-bold text-slate-900 text-sm mb-2">How much does tutoring cost?</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Standalone elementary tutoring (Ages ≤10) is <strong>$20/hour</strong>. If you add tutoring onto a babysitting session, it is only <strong>+$10/hour extra</strong> ($32/hour total for the combined sitting + tutoring session).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 text-slate-400 py-12 border-t border-slate-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-base">
+          N
+        </div>
+        <span class="text-lg font-bold text-white">NookSitters.ca</span>
+      </div>
+      <p class="text-xs text-slate-500">© 2026 Nook Sitters Calgary. Run exclusively by Nash McGregor.</p>
+      <div class="flex flex-wrap justify-center gap-6 text-xs font-semibold text-slate-400">
+        <a href="tel:4038991550" class="hover:text-amber-400 flex items-center gap-1.5 transition text-slate-300">
+          <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>403-899-1550</span>
+        </a>
+        <a href="mailto:nashnooksitters@gmail.com" class="hover:text-amber-400 flex items-center gap-1.5 transition text-slate-300">
+          <i data-lucide="mail" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>nashnooksitters@gmail.com</span>
+        </a>
+        <button onclick="openOwnerPortalLogin()" class="hover:text-white transition text-slate-400 underline">
+          Owner Portal
+        </button>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Booking Modal / Order Form -->
+  <div id="bookingModal" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      <button onclick="closeBookingModal()" class="absolute top-6 right-6 text-slate-400 hover:text-slate-700">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="mb-6">
+        <span class="text-[10px] font-bold uppercase tracking-widest text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full">Direct Order Form</span>
+        <h3 class="text-2xl font-black text-slate-900 mt-2">Book Nash McGregor</h3>
+        <div class="mt-2 p-3 bg-amber-50 border border-amber-200/80 rounded-xl text-xs text-amber-900 font-medium flex items-start gap-2">
+          <i data-lucide="info" class="w-4 h-4 text-amber-600 flex-shrink-0 mt-0.5"></i>
+          <span>Once you book, I will send you an email to confirm if I am available for your date and time.</span>
+        </div>
+      </div>
+
+      <form onsubmit="handleBookingSubmit(event)" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Parent Full Name</label>
+          <input required id="formParentName" type="text" placeholder="e.g. Sarah Jenkins" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Email</label>
+            <input required id="formEmail" type="email" placeholder="sarah@example.ca" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Phone</label>
+            <input required id="formPhone" type="tel" placeholder="(403) 899-1550" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Calgary Quadrant</label>
+            <select id="formQuadrant" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+              <option value="NW Calgary">NW Calgary</option>
+              <option value="SW Calgary">SW Calgary</option>
+              <option value="NE Calgary">NE Calgary</option>
+              <option value="SE Calgary">SE Calgary</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Service Type</label>
+            <select id="modalServiceType" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+              <option value="Care">Standard Babysitting ($22/hr)</option>
+              <option value="Tutoring">Standalone Tutoring ($20/hr)</option>
+              <option value="Combo">Sitting + Tutoring Combo ($32/hr)</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Date Needed</label>
+          <input required id="formDate" type="date" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Start Time</label>
+            <input required id="formStartTime" type="time" value="17:00" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">End Time</label>
+            <input required id="formEndTime" type="time" value="20:00" class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Kids' Ages & Homework Topics (Ages 4–10)</label>
+          <textarea id="formNotes" rows="2" placeholder="e.g. 1 kid (age 7). Need 1 hr of 2nd grade math tutoring..." class="w-full bg-stone-50 border border-stone-200 rounded-xl px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+        </div>
+
+        <button type="submit" id="submitBookingBtn" class="w-full bg-amber-500 hover:bg-amber-600 text-slate-950 font-extrabold py-3.5 rounded-xl transition shadow-md text-sm mt-2 flex items-center justify-center gap-2">
+          <span>Submit Booking Order Request</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Owner Portal Passcode Login Modal -->
+  <div id="ownerLoginModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-sm w-full shadow-2xl relative text-center">
+      <button onclick="closeOwnerLoginModal()" class="absolute top-5 right-5 text-slate-400 hover:text-slate-700">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <div class="w-12 h-12 bg-amber-100 text-amber-800 rounded-2xl flex items-center justify-center mx-auto mb-4 font-bold">
+        <i data-lucide="lock" class="w-6 h-6"></i>
+      </div>
+
+      <h3 class="text-xl font-black text-slate-900">Owner Portal Access</h3>
+      <p class="text-xs text-slate-500 mt-1 mb-4">Enter your owner passcode to view live booking requests.</p>
+
+      <!-- In-Modal Error Notice -->
+      <div id="ownerLoginError" class="hidden text-xs font-bold text-rose-600 bg-rose-50 p-2.5 rounded-xl border border-rose-200 text-center mb-4">
+        Incorrect Passcode. Please try again.
+      </div>
+
+      <form onsubmit="handleOwnerLogin(event)" class="space-y-4">
+        <div>
+          <input required id="ownerPasscode" type="password" placeholder="Enter Passcode" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" class="w-full text-center bg-stone-50 border border-stone-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500 font-bold tracking-widest" />
+        </div>
+        <button type="submit" class="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl transition text-xs shadow-md">
+          Unlock Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Owner Portal Dashboard Modal -->
+  <div id="ownerDashboardModal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-md hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl p-6 sm:p-8 max-w-5xl w-full shadow-2xl relative max-h-[92vh] overflow-y-auto flex flex-col gap-6">
+      
+      <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-stone-200 pb-4">
+        <div>
+          <span class="text-[10px] font-black uppercase tracking-widest text-amber-700 bg-amber-100 px-2.5 py-1 rounded-full">Nash's Owner Portal</span>
+          <h3 class="text-2xl font-black text-slate-900 mt-1">Live Booking Submissions</h3>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="renderOwnerDashboard()" class="text-xs font-bold text-slate-600 hover:text-slate-900 bg-stone-100 border border-stone-200 px-3 py-2 rounded-xl flex items-center gap-1.5">
+            <i data-lucide="refresh-cw" class="w-3.5 h-3.5 text-amber-600"></i>
+            <span>Refresh</span>
+          </button>
+          <button onclick="closeOwnerDashboardModal()" class="text-slate-400 hover:text-slate-700 p-1">
+            <i data-lucide="x" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Metrics Summary Row -->
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div class="bg-stone-50 border border-stone-200 p-4 rounded-2xl">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Total Orders</span>
+          <span id="metricTotal" class="text-2xl font-black text-slate-900">0</span>
+        </div>
+        <div class="bg-amber-50 border border-amber-200/80 p-4 rounded-2xl">
+          <span class="text-[10px] font-bold text-amber-800 uppercase tracking-wider block">Pending Review</span>
+          <span id="metricPending" class="text-2xl font-black text-amber-900">0</span>
+        </div>
+        <div class="bg-emerald-50 border border-emerald-200/80 p-4 rounded-2xl">
+          <span class="text-[10px] font-bold text-emerald-800 uppercase tracking-wider block">Confirmed</span>
+          <span id="metricConfirmed" class="text-2xl font-black text-emerald-900">0</span>
+        </div>
+        <div class="bg-slate-900 text-white p-4 rounded-2xl">
+          <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Est. Revenue</span>
+          <span id="metricRevenue" class="text-2xl font-black text-amber-400">$0 CAD</span>
+        </div>
+      </div>
+
+      <!-- Filter Tabs -->
+      <div class="flex items-center gap-2 border-b border-stone-200 pb-2">
+        <button onclick="filterOwnerOrders('all')" id="tabAll" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-900 text-white">All Requests</button>
+        <button onclick="filterOwnerOrders('pending')" id="tabPending" class="text-xs font-bold px-3 py-1.5 rounded-lg text-slate-600 hover:bg-stone-100">Pending</button>
+        <button onclick="filterOwnerOrders('confirmed')" id="tabConfirmed" class="text-xs font-bold px-3 py-1.5 rounded-lg text-slate-600 hover:bg-stone-100">Confirmed</button>
+        <button onclick="filterOwnerOrders('declined')" id="tabDeclined" class="text-xs font-bold px-3 py-1.5 rounded-lg text-slate-600 hover:bg-stone-100">Declined</button>
+      </div>
+
+      <!-- Orders List Container -->
+      <div id="ownerOrdersList" class="space-y-4">
+        <!-- Rendered dynamically -->
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Unified Synchronous Core Script -->
+  <script>
+    window.bookingsList = window.bookingsList || [];
+    window.activeFilter = 'all';
+
+    function purgePastBookings() {
+      const todayString = new Date().toISOString().split('T')[0];
+      if (Array.isArray(window.bookingsList)) {
+        window.bookingsList = window.bookingsList.filter(b => !b.date || b.date >= todayString);
+        try {
+          localStorage.setItem('nook_sitters_bookings', JSON.stringify(window.bookingsList));
+        } catch(e) {}
+      }
+    }
+
+    function renderOwnerDashboard() {
+      const container = document.getElementById("ownerOrdersList");
+      if (!container) return;
+
+      purgePastBookings();
+
+      const todayString = new Date().toISOString().split('T')[0];
+      const validBookings = (window.bookingsList || []).filter(b => !b.date || b.date >= todayString);
+
+      const total = validBookings.length;
+      const pending = validBookings.filter(b => b.status === 'pending').length;
+      const confirmed = validBookings.filter(b => b.status === 'confirmed').length;
+      
+      let estRevenue = 0;
+      validBookings.forEach(b => {
+        if (b.status === 'confirmed') {
+          const hours = b.hours || 3;
+          estRevenue += (b.estimatedRate || 22) * hours;
+        }
+      });
+
+      const mTotal = document.getElementById("metricTotal");
+      const mPending = document.getElementById("metricPending");
+      const mConfirmed = document.getElementById("metricConfirmed");
+      const mRev = document.getElementById("metricRevenue");
+
+      if (mTotal) mTotal.innerText = total;
+      if (mPending) mPending.innerText = pending;
+      if (mConfirmed) mConfirmed.innerText = confirmed;
+      if (mRev) mRev.innerText = `$${estRevenue.toFixed(0)} CAD`;
+
+      let filtered = validBookings;
+      if (window.activeFilter && window.activeFilter !== 'all') {
+        filtered = validBookings.filter(b => b.status === window.activeFilter);
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-slate-400 bg-stone-50 rounded-2xl border border-stone-200">
+            <p class="font-bold text-slate-700">No ${window.activeFilter === 'all' ? '' : window.activeFilter} active booking submissions found.</p>
+            <p class="text-xs mt-1">Past bookings are automatically cleaned up!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = "";
+      filtered.forEach(order => {
+        let badgeColor = "bg-amber-100 text-amber-900 border-amber-300";
+        if (order.status === 'confirmed') badgeColor = "bg-emerald-100 text-emerald-900 border-emerald-300";
+        if (order.status === 'declined') badgeColor = "bg-rose-100 text-rose-900 border-rose-300";
+
+        const timeDisplay = (order.startTime && order.endTime) 
+          ? `${order.startTime} – ${order.endTime}` 
+          : (order.time || 'TBD');
+
+        const card = document.createElement("div");
+        card.className = "bg-stone-50 border border-stone-200 p-5 rounded-2xl space-y-3 shadow-sm hover:border-amber-300 transition";
+        card.innerHTML = `
+          <div class="flex flex-col sm:flex-row justify-between sm:items-center gap-2 border-b border-stone-200 pb-3">
+            <div>
+              <div class="flex items-center gap-2">
+                <h4 class="font-black text-slate-900 text-base">${order.parentName || 'Parent Request'}</h4>
+                <span class="text-[10px] font-black uppercase px-2.5 py-0.5 rounded-full border ${badgeColor}">
+                  ${order.status || 'pending'}
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 mt-0.5">Submitted: ${new Date(order.createdAt || Date.now()).toLocaleString()}</p>
+            </div>
+            <div class="text-left sm:text-right">
+              <span class="text-xs font-bold text-amber-700 bg-amber-100 px-2.5 py-1 rounded-lg">
+                ${order.serviceType || 'Care'} • $${order.estimatedRate || 22}/hr
+              </span>
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-3 gap-3 text-xs text-slate-700">
+            <div>
+              <strong class="block text-[10px] uppercase text-slate-400">Contact</strong>
+              <p class="font-semibold"><a href="tel:${order.phone}" class="underline hover:text-amber-600">${order.phone || 'N/A'}</a></p>
+              <p class="text-slate-500"><a href="mailto:${order.email}" class="underline hover:text-amber-600">${order.email || 'N/A'}</a></p>
+            </div>
+            <div>
+              <strong class="block text-[10px] uppercase text-slate-400">Date & Timing</strong>
+              <p class="font-bold text-slate-900">${order.date || 'TBD'}</p>
+              <p class="text-emerald-700 font-bold">${timeDisplay} (${order.hours || 3} hrs)</p>
+              <p class="text-slate-500">${order.quadrant || 'Calgary'}</p>
+            </div>
+            <div>
+              <strong class="block text-[10px] uppercase text-slate-400">Parent Notes</strong>
+              <p class="text-slate-600 italic bg-white p-2 rounded-lg border border-stone-200 mt-1 max-h-20 overflow-y-auto">
+                "${order.notes || 'No special notes provided.'}"
+              </p>
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-wrap items-center justify-end gap-2 border-t border-stone-200/60">
+            <button onclick="confirmAndEmailParent('${order.id}', '${order.email}', '${order.parentName}', '${order.date}', '${order.startTime || order.time}', '${order.endTime || ''}')" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center gap-1 transition shadow-sm">
+              <i data-lucide="mail-check" class="w-3.5 h-3.5"></i>
+              <span>Confirm & Email Parent</span>
+            </button>
+            <button onclick="updateBookingStatus('${order.id}', 'declined')" class="bg-stone-200 hover:bg-stone-300 text-slate-800 text-xs font-semibold px-3 py-1.5 rounded-lg transition">
+              Mark Declined
+            </button>
+            <button onclick="deleteBookingOrder('${order.id}')" class="text-rose-600 hover:text-rose-800 text-xs font-semibold px-2 py-1.5 rounded-lg transition">
+              Delete Order
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+
+      if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+      }
+    }
+    window.renderOwnerDashboard = renderOwnerDashboard;
+
+    function filterOwnerOrders(status) {
+      window.activeFilter = status;
+      ['All', 'Pending', 'Confirmed', 'Declined'].forEach(tab => {
+        const btn = document.getElementById(`tab${tab}`);
+        if (btn) {
+          if (tab.toLowerCase() === status) {
+            btn.className = "text-xs font-bold px-3 py-1.5 rounded-lg bg-slate-900 text-white";
+          } else {
+            btn.className = "text-xs font-bold px-3 py-1.5 rounded-lg text-slate-600 hover:bg-stone-100";
+          }
+        }
+      });
+      renderOwnerDashboard();
+    }
+    window.filterOwnerOrders = filterOwnerOrders;
+
+    function updateBookingStatus(bookingId, newStatus) {
+      if (typeof window.cloudUpdateBookingStatus === 'function') {
+        window.cloudUpdateBookingStatus(bookingId, newStatus);
+      } else {
+        const found = (window.bookingsList || []).find(b => b.id === bookingId);
+        if (found) {
+          found.status = newStatus;
+          try {
+            localStorage.setItem('nook_sitters_bookings', JSON.stringify(window.bookingsList));
+          } catch(e) {}
+          renderOwnerDashboard();
+          showToast(`Status updated to ${newStatus.toUpperCase()}`);
+        }
+      }
+    }
+    window.updateBookingStatus = updateBookingStatus;
+
+    function deleteBookingOrder(bookingId) {
+      if (!confirm("Are you sure you want to delete this order record?")) return;
+      if (typeof window.cloudDeleteBookingOrder === 'function') {
+        window.cloudDeleteBookingOrder(bookingId);
+      } else {
+        window.bookingsList = (window.bookingsList || []).filter(b => b.id !== bookingId);
+        try {
+          localStorage.setItem('nook_sitters_bookings', JSON.stringify(window.bookingsList));
+        } catch(e) {}
+        renderOwnerDashboard();
+        showToast("Booking request deleted.");
+      }
+    }
+    window.deleteBookingOrder = deleteBookingOrder;
+
+    function confirmAndEmailParent(bookingId, email, parentName, date, startTime, endTime) {
+      updateBookingStatus(bookingId, 'confirmed');
+      
+      const timeStr = (startTime && endTime) ? `${startTime} to ${endTime}` : startTime;
+      const subject = encodeURIComponent(`Nook Sitters Calgary - Booking Confirmation for ${date}`);
+      const body = encodeURIComponent(`Hi ${parentName},\n\nI received your booking request for ${date} (${timeStr}). I am happy to confirm that I am available!\n\nI look forward to babysitting/tutoring your kids.\n\nBest regards,\nNash McGregor\nNook Sitters Calgary\n403-899-1550`);
+      
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    }
+    window.confirmAndEmailParent = confirmAndEmailParent;
+
+    function handleOwnerLogin(e) {
+      if (e) e.preventDefault();
+      const passInput = document.getElementById("ownerPasscode");
+      const errDiv = document.getElementById("ownerLoginError");
+      const rawCode = passInput ? passInput.value : "";
+      const code = rawCode.trim().toLowerCase();
+
+      // Flexible check accepts "marble12", "marble12.", "Marble12", or any variation containing marble12
+      if (code === "marble12" || code === "marble12." || code.includes("marble12")) {
+        if (errDiv) errDiv.classList.add("hidden");
+        closeOwnerLoginModal();
+        const modal = document.getElementById("ownerDashboardModal");
+        if (modal) {
+          modal.classList.remove("hidden");
+          modal.classList.add("flex");
+        }
+        renderOwnerDashboard();
+      } else {
+        if (errDiv) {
+          errDiv.classList.remove("hidden");
+        } else {
+          alert("Incorrect Passcode. Please try again.");
+        }
+      }
+    }
+    window.handleOwnerLogin = handleOwnerLogin;
+
+    // Load initial local data synchronously
+    try {
+      const stored = localStorage.getItem('nook_sitters_bookings');
+      if (stored) window.bookingsList = JSON.parse(stored);
+    } catch(e) {}
+
+    // UI Helpers
+    function scrollToSection(sectionId) {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const yOffset = -90;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+      const mobileMenu = document.getElementById("mobileMenu");
+      if (mobileMenu && !mobileMenu.classList.contains("hidden")) {
+        toggleMobileMenu();
+      }
+    }
+
+    function updateCalculator() {
+      const kids = parseInt(document.getElementById("kidsSlider").value);
+      const startTime = document.getElementById("calcStartTime").value;
+      const endTime = document.getElementById("calcEndTime").value;
+      
+      let hours = 3;
+      if (startTime && endTime) {
+        const [sH, sM] = startTime.split(':').map(Number);
+        const [eH, eM] = endTime.split(':').map(Number);
+        let diff = (eH + eM/60) - (sH + sM/60);
+        if (diff > 0) hours = Math.round(diff * 10) / 10;
+      }
+
+      document.getElementById("calcDurationText").innerText = `${hours} Hours`;
+
+      const serviceRadio = document.querySelector('input[name="calcService"]:checked');
+      const serviceType = serviceRadio ? serviceRadio.value : 'combo';
+
+      let baseHourly = 22;
+      let breakdownText = "";
+
+      if (serviceType === 'tutoring_only') {
+        baseHourly = 20;
+        breakdownText = `$20/hr standalone tutoring rate`;
+      } else if (serviceType === 'combo') {
+        baseHourly = 32;
+        breakdownText = `$32/hr rate ($22 base + $10 tutoring add-on)`;
+      } else {
+        baseHourly = 22;
+        breakdownText = `$22/hr base babysitting rate`;
+      }
+
+      if (kids > 1) {
+        baseHourly += (kids - 1) * 2;
+      }
+
+      const grandTotal = baseHourly * hours;
+
+      document.getElementById("kidsValue").innerText = `${kids} ${kids === 1 ? 'Child' : 'Children'}`;
+      document.getElementById("calcTotal").innerText = `$${grandTotal.toFixed(2)}`;
+      document.getElementById("calcRateBreakdown").innerText = breakdownText;
+    }
+
+    function openBookingModal(type = 'Care') {
+      const modalTypeSelect = document.getElementById("modalServiceType");
+      const serviceRadio = document.querySelector('input[name="calcService"]:checked');
+      const calcServiceVal = serviceRadio ? serviceRadio.value : 'combo';
+
+      if (type === 'Calculated') {
+        const calcStart = document.getElementById("calcStartTime").value;
+        const calcEnd = document.getElementById("calcEndTime").value;
+        if (calcStart) document.getElementById("formStartTime").value = calcStart;
+        if (calcEnd) document.getElementById("formEndTime").value = calcEnd;
+
+        if (calcServiceVal === 'tutoring_only') {
+          modalTypeSelect.value = "Tutoring";
+        } else if (calcServiceVal === 'combo') {
+          modalTypeSelect.value = "Combo";
+        } else {
+          modalTypeSelect.value = "Care";
+        }
+      } else if (type === 'Tutoring') {
+        modalTypeSelect.value = "Tutoring";
+      } else if (type === 'Combo' || type === 'Tutoring Combo') {
+        modalTypeSelect.value = "Combo";
+      } else {
+        modalTypeSelect.value = "Care";
+      }
+      document.getElementById("bookingModal").classList.remove("hidden");
+      document.getElementById("bookingModal").classList.add("flex");
+    }
+
+    function closeBookingModal() {
+      document.getElementById("bookingModal").classList.remove("flex");
+      document.getElementById("bookingModal").classList.add("hidden");
+    }
+
+    function openOwnerPortalLogin() {
+      const errDiv = document.getElementById("ownerLoginError");
+      if (errDiv) errDiv.classList.add("hidden");
+      document.getElementById("ownerLoginModal").classList.remove("hidden");
+      document.getElementById("ownerLoginModal").classList.add("flex");
+      const p = document.getElementById("ownerPasscode");
+      if (p) {
+        p.value = "";
+        p.focus();
+      }
+    }
+
+    function closeOwnerLoginModal() {
+      document.getElementById("ownerLoginModal").classList.remove("flex");
+      document.getElementById("ownerLoginModal").classList.add("hidden");
+    }
+
+    function closeOwnerDashboardModal() {
+      document.getElementById("ownerDashboardModal").classList.remove("flex");
+      document.getElementById("ownerDashboardModal").classList.add("hidden");
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      const menuIcon = document.getElementById("menuIcon");
+      const isHidden = menu.classList.contains("hidden");
+
+      if (isHidden) {
+        menu.classList.remove("hidden");
+        menuIcon.setAttribute("data-lucide", "x");
+      } else {
+        menu.classList.add("hidden");
+        menuIcon.setAttribute("data-lucide", "menu");
+      }
+      if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+      }
+    }
+
+    function showToast(message) {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = "bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 pointer-events-auto border border-slate-700 animate-bounce max-w-sm";
+      toast.innerHTML = `<span>${message}</span>`;
+      
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
+    }
+
+    function handleBookingSubmit(e) {
+      e.preventDefault();
+      const parentName = document.getElementById("formParentName").value;
+      const email = document.getElementById("formEmail").value;
+      const phone = document.getElementById("formPhone").value;
+      const quadrant = document.getElementById("formQuadrant").value;
+      const serviceType = document.getElementById("modalServiceType").value;
+      const date = document.getElementById("formDate").value;
+      const startTime = document.getElementById("formStartTime").value;
+      const endTime = document.getElementById("formEndTime").value;
+      const notes = document.getElementById("formNotes").value;
+
+      let calculatedHours = 3;
+      if (startTime && endTime) {
+        const [sH, sM] = startTime.split(':').map(Number);
+        const [eH, eM] = endTime.split(':').map(Number);
+        let diff = (eH + eM/60) - (sH + sM/60);
+        if (diff > 0) calculatedHours = Math.round(diff * 10) / 10;
+      }
+
+      let rate = 22;
+      if (serviceType === 'Tutoring') rate = 20;
+      if (serviceType === 'Combo') rate = 32;
+
+      const booking = {
+        id: 'b_' + Date.now(), parentName, email, phone, quadrant, serviceType, date,
+        startTime, endTime, hours: calculatedHours, notes, estimatedRate: rate, status: 'pending', createdAt: Date.now()
+      };
+
+      window.bookingsList.unshift(booking);
+      try {
+        localStorage.setItem('nook_sitters_bookings', JSON.stringify(window.bookingsList));
+      } catch(err) {}
+
+      closeBookingModal();
+      showToast("📩 Order submitted to Nash! I will email you directly to confirm availability.");
+      renderOwnerDashboard();
+    }
+    window.handleBookingSubmit = handleBookingSubmit;
+
+    window.addEventListener("DOMContentLoaded", () => {
+      updateCalculator();
+      if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+      }
+    });
+  </script>
+
+  <!-- Module Enhancement for Firebase Cloud Sync -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getFirestore, collection, addDoc, updateDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const firebaseConfig = (typeof __firebase_config !== 'undefined' && __firebase_config) ? JSON.parse(__firebase_config) : null;
+    const appId = (typeof __app_id !== 'undefined' && __app_id) ? __app_id : 'nook-sitters-calgary';
+
+    if (firebaseConfig) {
+      try {
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        async function initAuth() {
+          try {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+              await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+              await signInAnonymously(auth);
+            }
+          } catch (err) {
+            console.warn("Firebase Auth fallback:", err);
+          }
+        }
+
+        onAuthStateChanged(auth, (user) => {
+          if (user) {
+            const bookingsCol = collection(db, 'artifacts', appId, 'public', 'data', 'bookings');
+            onSnapshot(bookingsCol, (snapshot) => {
+              window.bookingsList = [];
+              snapshot.forEach((docSnap) => {
+                window.bookingsList.push({
+                  id: docSnap.id,
+                  ...docSnap.data()
+                });
+              });
+              window.bookingsList.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+              if (window.renderOwnerDashboard) window.renderOwnerDashboard();
+            }, (e) => console.warn(e));
+          }
+        });
+
+        initAuth();
+
+        window.cloudUpdateBookingStatus = async function(bookingId, newStatus) {
+          if (!auth.currentUser) return;
+          try {
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'bookings', bookingId);
+            await updateDoc(docRef, { status: newStatus });
+            showToast(`Status updated to ${newStatus.toUpperCase()}`);
+          } catch (e) { console.error(e); }
+        };
+
+        window.cloudDeleteBookingOrder = async function(bookingId) {
+          if (!auth.currentUser) return;
+          try {
+            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'bookings', bookingId);
+            await deleteDoc(docRef);
+            showToast("Booking request deleted.");
+          } catch (e) { console.error(e); }
+        };
+
+        const origSubmit = window.handleBookingSubmit;
+        window.handleBookingSubmit = async function(e) {
+          e.preventDefault();
+          if (auth.currentUser) {
+            const submitBtn = document.getElementById("submitBookingBtn");
+            submitBtn.disabled = true;
+            submitBtn.innerText = "Saving Request...";
+
+            const parentName = document.getElementById("formParentName").value;
+            const email = document.getElementById("formEmail").value;
+            const phone = document.getElementById("formPhone").value;
+            const quadrant = document.getElementById("formQuadrant").value;
+            const serviceType = document.getElementById("modalServiceType").value;
+            const date = document.getElementById("formDate").value;
+            const startTime = document.getElementById("formStartTime").value;
+            const endTime = document.getElementById("formEndTime").value;
+            const notes = document.getElementById("formNotes").value;
+
+            let calculatedHours = 3;
+            if (startTime && endTime) {
+              const [sH, sM] = startTime.split(':').map(Number);
+              const [eH, eM] = endTime.split(':').map(Number);
+              let diff = (eH + eM/60) - (sH + sM/60);
+              if (diff > 0) calculatedHours = Math.round(diff * 10) / 10;
+            }
+
+            let rate = 22;
+            if (serviceType === 'Tutoring') rate = 20;
+            if (serviceType === 'Combo') rate = 32;
+
+            try {
+              const bookingsCol = collection(db, 'artifacts', appId, 'public', 'data', 'bookings');
+              await addDoc(bookingsCol, {
+                parentName, email, phone, quadrant, serviceType, date, startTime, endTime,
+                hours: calculatedHours, notes, estimatedRate: rate, status: 'pending', createdAt: Date.now()
+              });
+              closeBookingModal();
+              showToast("📩 Order submitted to Nash! I will email you directly to confirm availability.");
+            } catch(err) {
+              origSubmit(e);
+            } finally {
+              submitBtn.disabled = false;
+              submitBtn.innerText = "Submit Booking Order Request";
+            }
+          } else {
+            origSubmit(e);
+          }
+        };
+
+      } catch(e) {
+        console.warn("Module load skipped:", e);
+      }
+    }
+  </script>
+</body>
+</html>
+
