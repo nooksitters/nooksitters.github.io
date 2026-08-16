@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>nooksitters.github.io | Nash McGregor (11 Y/O) - Babysitting & Tutoring</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Plus Jakarta Sans', 'sans-serif'],
+          },
+          colors: {
+            nook: {
+              50: '#fdfbf7',
+              100: '#f7f2e7',
+              200: '#ebdcc3',
+              300: '#ddc298',
+              400: '#cda16a',
+              500: '#c18848',
+              600: '#b2723c',
+              700: '#945833',
+              800: '#784730',
+              900: '#623b2a',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      -webkit-text-size-adjust: 100%;
+    }
+    html, body {
+      width: 100%;
+      min-height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    input, select, textarea, button {
+      font-size: 16px !important;
+    }
+    .backdrop-blur-md, .backdrop-blur-sm {
+      -webkit-backdrop-filter: blur(12px);
+      backdrop-filter: blur(12px);
+    }
+    .modal-card {
+      -webkit-overflow-scrolling: touch;
+      max-height: 90vh;
+    }
+  </style>
+</head>
+<body class="bg-[#FAF8F5] text-slate-800 antialiased selection:bg-amber-200 selection:text-amber-900 pb-20 md:pb-0 overflow-x-hidden">
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="fixed top-4 right-4 left-4 sm:left-auto sm:w-96 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+  <!-- Announcement Bar -->
+  <div class="bg-slate-900 text-amber-300 text-[11px] sm:text-xs py-2 px-4 text-center font-bold flex items-center justify-center gap-2">
+    <span>🇨🇦 Calgary’s Premier 11-Year-Old Solo Babysitter & Tutor</span>
+    <span class="hidden md:inline-block border-l border-slate-700 pl-2 text-slate-300">Nash McGregor (11 Y/O) • <a href="tel:4038991550" class="underline text-amber-300 hover:text-white">📱 403-899-1550</a> • Red Cross Certified</span>
+  </div>
+
+  <!-- Notice: Availability Banner -->
+  <div class="bg-amber-500 text-slate-950 font-bold px-4 py-2.5 sm:py-3 border-b border-amber-600 shadow-sm">
+    <div class="w-full max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 sm:gap-2 text-center sm:text-left text-xs sm:text-sm">
+      <div class="flex items-center gap-2 justify-center">
+        <span class="text-base">📅</span>
+        <span><strong>Notice:</strong> Fully booked until <strong>September 15</strong>.</span>
+      </div>
+      <div class="text-[11px] sm:text-xs bg-slate-950 text-white px-3 py-0.5 sm:py-1 rounded-full font-semibold">
+        Text 403-899-1550 for Sept 15+ bookings
+      </div>
+    </div>
+  </div>
+
+  <!-- Ultra-Fit Mobile & Desktop Navbar -->
+  <nav class="sticky top-0 z-40 bg-[#FAF8F5]/95 backdrop-blur-md border-b border-stone-200/80 transition-all">
+    <div class="w-full max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 sm:h-20 flex items-center justify-between gap-2 sm:gap-4">
+      
+      <!-- Logo -->
+      <a href="javascript:void(0)" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="flex items-center gap-2 sm:gap-2.5 group flex-shrink-0">
+        <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-lg sm:text-xl shadow-md group-hover:scale-105 transition-transform flex-shrink-0">
+          N
+        </div>
+        <div class="flex flex-col">
+          <span class="text-base sm:text-xl font-extrabold tracking-tight text-slate-900 leading-none whitespace-nowrap">Nook<span class="text-amber-600">Sitters</span></span>
+          <span class="text-[8px] sm:text-[10px] font-bold tracking-widest text-slate-400 uppercase whitespace-nowrap">nooksitters.github.io</span>
+        </div>
+      </a>
+
+      <!-- Right Header Actions (Optimized SMS Text Button + Perfect Fit Hamburger Icon) -->
+      <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        <button onclick="sendTextBooking('Care')" class="bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-extrabold shadow-sm hover:shadow transition flex items-center gap-1.5 whitespace-nowrap flex-shrink-0 cursor-pointer border border-slate-800">
+          <i data-lucide="message-square" class="w-3.5 h-3.5 text-amber-400 flex-shrink-0"></i>
+          <span class="inline sm:hidden">Text Nash</span>
+          <span class="hidden sm:inline">Text Nash to Book</span>
+        </button>
+
+        <!-- 3-Line Hamburger Dropdown Button -->
+        <button id="menuDropdownBtn" onclick="toggleMenuDropdown()" class="w-9 h-9 sm:w-10 sm:h-10 text-slate-800 bg-stone-100 hover:bg-stone-200 active:bg-stone-300 rounded-xl transition flex items-center justify-center border border-stone-200/90 focus:outline-none flex-shrink-0 cursor-pointer shadow-sm group" aria-label="Toggle Menu">
+          <i id="menuIcon" data-lucide="menu" class="w-5 h-5 text-slate-900 group-hover:text-amber-700 transition"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Dropdown Menu Drawer -->
+    <div id="navDropdownMenu" class="hidden border-b border-stone-200 bg-white/98 backdrop-blur-md px-5 sm:px-8 py-6 shadow-2xl transition-all">
+      <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Navigation Links -->
+        <div class="space-y-2">
+          <span class="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-1">Sections</span>
+          <button onclick="scrollToSection('about')" class="block w-full text-left font-bold text-slate-800 hover:text-amber-600 py-1.5 transition">About Nash McGregor (11 Y/O)</button>
+          <button onclick="scrollToSection('tutoring')" class="flex items-center justify-between w-full text-left font-bold text-slate-800 hover:text-amber-600 py-1.5 transition">
+            <span>Elementary Tutoring</span>
+            <span class="bg-amber-100 text-amber-900 text-[10px] font-black px-2 py-0.5 rounded-full">$20/hr</span>
+          </button>
+          <button onclick="scrollToSection('hours')" class="block w-full text-left font-bold text-slate-800 hover:text-amber-600 py-1.5 transition">Hours of Operation</button>
+          <button onclick="scrollToSection('certifications')" class="block w-full text-left font-bold text-slate-800 hover:text-amber-600 py-1.5 transition">Red Cross Certifications</button>
+          <button onclick="scrollToSection('calculator')" class="block w-full text-left font-bold text-slate-800 hover:text-amber-600 py-1.5 transition">Rate Calculator</button>
+          <button onclick="scrollToSection('faq')" class="block w-full text-left font-bold text-slate-800 hover:text-amber-600 py-1.5 transition">FAQ</button>
+        </div>
+
+        <!-- Contact Links -->
+        <div class="space-y-3">
+          <span class="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-1">Direct Contact</span>
+          <a href="tel:4038991550" class="w-full text-xs font-bold text-slate-800 py-3 px-3.5 border border-stone-200 rounded-2xl bg-stone-50 hover:bg-stone-100 flex items-center gap-2.5 transition">
+            <i data-lucide="phone" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
+            <span>Call 403-899-1550</span>
+          </a>
+          <a href="mailto:nashnooksitters@gmail.com" class="w-full text-xs font-bold text-slate-800 py-3 px-3.5 border border-stone-200 rounded-2xl bg-stone-50 hover:bg-stone-100 flex items-center gap-2.5 transition truncate">
+            <i data-lucide="mail" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
+            <span class="truncate">nashnooksitters@gmail.com</span>
+          </a>
+        </div>
+
+        <!-- Direct SMS Booking Actions -->
+        <div class="space-y-3">
+          <span class="text-[10px] font-black uppercase tracking-wider text-slate-400 block mb-1">Instant Text Booking</span>
+          <button onclick="toggleMenuDropdown(); sendTextBooking('Care');" class="w-full bg-slate-900 hover:bg-slate-800 active:bg-slate-950 text-white py-3 px-4 rounded-2xl font-bold transition flex items-center justify-center gap-2 shadow-sm text-xs sm:text-sm cursor-pointer">
+            <i data-lucide="message-square" class="w-4 h-4 text-amber-400"></i>
+            <span>Text to Book Babysitting ($22/hr/kid)</span>
+          </button>
+          <button onclick="toggleMenuDropdown(); sendTextBooking('Tutoring');" class="w-full bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 py-3 px-4 rounded-2xl font-bold transition flex items-center justify-center gap-2 shadow-sm text-xs sm:text-sm cursor-pointer">
+            <i data-lucide="message-square" class="w-4 h-4 text-slate-950"></i>
+            <span>Text to Book Tutoring ($20/hr/kid)</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative overflow-hidden pt-8 pb-16 sm:py-20 lg:py-24">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        
+        <!-- Hero Text -->
+        <div class="lg:col-span-7 space-y-5 sm:space-y-6 text-center lg:text-left">
+          <div class="inline-flex items-center gap-2 bg-amber-100/90 border border-amber-300/80 px-3.5 py-1.5 rounded-full text-[11px] sm:text-xs font-extrabold text-amber-900 shadow-sm">
+            <span class="flex h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+            Private Calgary 11-Year-Old Sitter & Tutor
+          </div>
+          
+          <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.15]">
+            Dedicated Calgary childcare & tutoring for <span class="text-amber-600 underline decoration-amber-300 decoration-wavy decoration-2">kids ages 10 & under</span>.
+          </h1>
+          
+          <p class="text-sm sm:text-base lg:text-lg text-slate-600 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+            I’m <strong>Nash McGregor</strong>, an 11-year-old Red Cross certified sitter and tutor in Calgary. You get 1-on-1 personal care directly from me—no agency middleman, no random substitutes. Services resume starting <strong>September 15</strong>!
+          </p>
+
+          <!-- Action Buttons -->
+          <div class="pt-2 sm:pt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-center lg:justify-start gap-3 sm:gap-4">
+            <button onclick="sendTextBooking('Care')" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-slate-950 font-black px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl transition shadow-md flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer">
+              <i data-lucide="message-square" class="w-4 h-4 sm:w-5 sm:h-5 text-slate-950"></i>
+              <span>Text to Book Babysitting ($22/hr/kid)</span>
+            </button>
+            
+            <button onclick="sendTextBooking('Tutoring')" class="w-full sm:w-auto bg-white border border-stone-300 hover:bg-stone-50 active:bg-stone-100 text-slate-900 font-bold px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl transition shadow-sm text-center flex items-center justify-center gap-2 text-sm sm:text-base cursor-pointer">
+              <i data-lucide="message-square" class="w-4 h-4 sm:w-5 sm:h-5 text-amber-600"></i>
+              <span>Text to Book Tutoring ($20/hr/kid)</span>
+            </button>
+          </div>
+
+          <!-- Quick Contact Badges -->
+          <div class="pt-4 sm:pt-6 flex flex-wrap items-center justify-center lg:justify-start gap-4 sm:gap-6 text-xs font-bold text-slate-600">
+            <div class="flex items-center gap-1.5">
+              <i data-lucide="award" class="w-4 h-4 text-rose-600"></i>
+              <span>Red Cross Certified</span>
+            </div>
+            <a href="tel:4038991550" class="flex items-center gap-1.5 hover:text-slate-900 transition">
+              <i data-lucide="phone" class="w-4 h-4 text-emerald-600"></i>
+              <span>403-899-1550</span>
+            </a>
+            <a href="mailto:nashnooksitters@gmail.com" class="flex items-center gap-1.5 hover:text-slate-900 transition">
+              <i data-lucide="mail" class="w-4 h-4 text-amber-600"></i>
+              <span>nashnooksitters@gmail.com</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Hero Card -->
+        <div class="lg:col-span-5 relative mt-4 lg:mt-0">
+          <div class="relative mx-auto max-w-md lg:max-w-none">
+            <div class="absolute -top-6 -left-6 w-60 sm:w-72 h-60 sm:h-72 bg-amber-200/50 rounded-full blur-3xl -z-10"></div>
+            <div class="absolute -bottom-6 -right-6 w-60 sm:w-72 h-60 sm:h-72 bg-rose-100/50 rounded-full blur-3xl -z-10"></div>
+
+            <div class="bg-white rounded-3xl p-5 sm:p-7 shadow-xl sm:shadow-2xl border border-stone-200 space-y-5">
+              <div class="flex items-center justify-between border-b border-stone-100 pb-4">
+                <div class="flex items-center gap-3">
+                  <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-xl sm:text-2xl shadow-md">
+                    NM
+                  </div>
+                  <div>
+                    <h3 class="font-extrabold text-slate-900 text-base sm:text-lg">Nash McGregor</h3>
+                    <p class="text-[11px] sm:text-xs text-amber-700 font-bold">11-Year-Old Solo Caregiver</p>
+                  </div>
+                </div>
+                <span class="bg-rose-100 text-rose-800 text-[10px] sm:text-[11px] font-black px-2.5 py-1 rounded-full border border-rose-200">
+                  Red Cross Certified
+                </span>
+              </div>
+
+              <div class="space-y-2.5 text-xs text-slate-600">
+                <div class="flex items-center gap-2.5 bg-stone-50 p-2.5 sm:p-3 rounded-xl border border-stone-200">
+                  <i data-lucide="award" class="w-4 h-4 text-rose-600 flex-shrink-0"></i>
+                  <span>Official <strong>Red Cross Babysitting Certification</strong></span>
+                </div>
+                <div class="flex items-center gap-2.5 bg-stone-50 p-2.5 sm:p-3 rounded-xl border border-stone-200">
+                  <i data-lucide="graduation-cap" class="w-4 h-4 text-amber-600 flex-shrink-0"></i>
+                  <span>Elementary Tutoring (<strong>$20/hr per kid</strong>)</span>
+                </div>
+                <div class="flex items-center gap-2.5 bg-stone-50 p-2.5 sm:p-3 rounded-xl border border-stone-200">
+                  <i data-lucide="calendar" class="w-4 h-4 text-emerald-600 flex-shrink-0"></i>
+                  <span>Resuming Sessions Starting <strong>September 15</strong></span>
+                </div>
+              </div>
+
+              <p class="text-xs text-slate-600 italic leading-relaxed bg-amber-50/70 p-3 rounded-xl border border-amber-200/60">
+                "Nash is an awesome 11-year-old sitter! He brings great energy, keeps our 7-year-old on track with reading, and makes bedtime seamless!"
+                <span class="block text-[10px] font-bold text-slate-800 not-italic mt-1">— The Patterson Family</span>
+              </p>
+
+              <div class="pt-1 flex gap-2 sm:gap-3">
+                <button onclick="sendTextBooking('Care')" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-2.5 sm:py-3 rounded-xl text-xs transition shadow-sm text-center cursor-pointer flex items-center justify-center gap-1.5">
+                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-amber-400"></i>
+                  <span>Text Babysitting</span>
+                </button>
+                <button onclick="sendTextBooking('Tutoring')" class="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-2.5 sm:py-3 rounded-xl text-xs transition shadow-sm text-center cursor-pointer flex items-center justify-center gap-1.5">
+                  <i data-lucide="message-square" class="w-3.5 h-3.5 text-slate-950"></i>
+                  <span>Text Tutoring</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- About Nash McGregor Section -->
+  <section id="about" class="py-16 sm:py-20 bg-stone-100/70 border-y border-stone-200 scroll-mt-20">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-700">Boutique Personal Care</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">Meet Nash McGregor</h2>
+        <p class="text-slate-600 text-xs sm:text-sm mt-2">11-year-old certified caregiver providing high-quality, personal babysitting and tutoring directly to Calgary families.</p>
+      </div>
+
+      <div class="max-w-4xl mx-auto bg-white border border-stone-200 rounded-3xl p-5 sm:p-8 lg:p-10 shadow-lg grid md:grid-cols-12 gap-6 md:gap-8 items-center">
+        <div class="md:col-span-5 text-center flex flex-col items-center">
+          <div class="w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-3xl bg-amber-500 text-slate-950 font-black text-3xl sm:text-4xl flex items-center justify-center shadow-md mb-3 sm:mb-4">
+            NM
+          </div>
+          <h3 class="text-xl sm:text-2xl font-black text-slate-900">Nash McGregor</h3>
+          <p class="text-xs font-bold text-amber-700">11 Years Old • Calgary, AB</p>
+          <div class="flex items-center gap-1 text-amber-400 my-2">
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <i data-lucide="star" class="w-4 h-4 fill-amber-400"></i>
+            <span class="text-xs font-bold text-slate-800 ml-1">5.0 Rating</span>
+          </div>
+
+          <div class="flex flex-wrap justify-center gap-1.5 mt-1 mb-4">
+            <span class="text-[10px] bg-amber-100 text-amber-900 font-bold px-2.5 py-0.5 rounded-md border border-amber-300">11 Years Old</span>
+            <span class="text-[10px] bg-rose-50 text-rose-800 font-bold px-2.5 py-0.5 rounded-md border border-rose-200">Red Cross Certified</span>
+            <span class="text-[10px] bg-amber-50 text-amber-800 font-bold px-2.5 py-0.5 rounded-md border border-amber-200">Elementary Tutor</span>
+            <span class="text-[10px] bg-stone-100 text-slate-700 font-bold px-2.5 py-0.5 rounded-md border border-stone-200">Ages 4–10</span>
+          </div>
+
+          <div class="w-full bg-stone-50 border border-stone-200 rounded-2xl p-3 text-left space-y-2">
+            <a href="tel:4038991550" class="flex items-center gap-2 text-xs text-slate-800 font-bold hover:text-amber-600 transition">
+              <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-600 flex-shrink-0"></i>
+              <span>403-899-1550</span>
+            </a>
+            <a href="mailto:nashnooksitters@gmail.com" class="flex items-center gap-2 text-xs text-slate-800 font-bold hover:text-amber-600 transition truncate">
+              <i data-lucide="mail" class="w-3.5 h-3.5 text-amber-600 flex-shrink-0"></i>
+              <span class="truncate">nashnooksitters@gmail.com</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="md:col-span-7 space-y-3.5 sm:space-y-4">
+          <h4 class="text-base sm:text-lg font-bold text-slate-900">Hi Calgary Families!</h4>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            I’m <strong>Nash McGregor</strong>, an 11-year-old solo caregiver in Calgary. When you text me to book a spot on my schedule, you get me directly—someone who knows your family, respects your household routine, and brings a positive, energetic vibe every single time.
+          </p>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            I am fully certified through the <strong>Red Cross Babysitting Program</strong>, trained in child safety, emergency first aid, and structured playtime. For kids ages 10 and under, I also offer dedicated elementary tutoring for math, reading, and homework support!
+          </p>
+
+          <div class="grid grid-cols-3 gap-2 sm:gap-3 pt-2">
+            <div class="bg-stone-50 p-2.5 sm:p-3 rounded-xl border border-stone-200 text-center sm:text-left">
+              <span class="block text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase">Babysitting</span>
+              <span class="text-xs sm:text-sm font-bold text-slate-800">$22/hr / kid</span>
+            </div>
+            <div class="bg-stone-50 p-2.5 sm:p-3 rounded-xl border border-stone-200 text-center sm:text-left">
+              <span class="block text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase">Tutoring Only</span>
+              <span class="text-xs sm:text-sm font-bold text-amber-700">$20/hr / kid</span>
+            </div>
+            <div class="bg-stone-50 p-2.5 sm:p-3 rounded-xl border border-stone-200 text-center sm:text-left">
+              <span class="block text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase">Add-On</span>
+              <span class="text-xs sm:text-sm font-bold text-emerald-700">+$10/hr / kid</span>
+            </div>
+          </div>
+
+          <div class="pt-2 flex flex-col sm:flex-row gap-2 sm:gap-3">
+            <button onclick="sendTextBooking('Care')" class="flex-1 bg-amber-500 hover:bg-amber-600 text-slate-950 font-bold py-3 rounded-xl text-xs sm:text-sm transition shadow-sm text-center cursor-pointer flex items-center justify-center gap-1.5">
+              <i data-lucide="message-square" class="w-4 h-4 text-slate-950"></i>
+              <span>Text to Book Babysitting</span>
+            </button>
+            <button onclick="sendTextBooking('Tutoring')" class="flex-1 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3 rounded-xl text-xs sm:text-sm transition shadow-sm text-center cursor-pointer flex items-center justify-center gap-1.5">
+              <i data-lucide="message-square" class="w-4 h-4 text-amber-400"></i>
+              <span>Text to Book Tutoring</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TUTORING SECTION -->
+  <section id="tutoring" class="py-16 sm:py-24 bg-white scroll-mt-20">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+        <span class="bg-amber-100 text-amber-900 text-xs font-black px-3.5 py-1.5 rounded-full uppercase tracking-wider">
+          $20/hr Standalone per kid • +$10/hr Add-on per kid
+        </span>
+        <h2 class="text-2xl sm:text-4xl lg:text-5xl font-black text-slate-900 tracking-tight mt-3">
+          Elementary Tutoring (Ages 10 & Under)
+        </h2>
+        <p class="text-xs sm:text-sm lg:text-base text-slate-600 mt-2.5 max-w-2xl mx-auto leading-relaxed">
+          Need academic support? Text to book standalone tutoring for <strong>$20/hour per kid</strong> or add dedicated elementary tutoring to any sitting session for just <strong>+$10/hour per kid</strong> starting September 15!
+        </p>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10 sm:mb-16">
+        
+        <div class="bg-stone-50 border border-stone-200 p-5 sm:p-6 rounded-2xl hover:border-amber-400 transition">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-3 sm:mb-4">
+            <i data-lucide="calculator" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base mb-1">Primary Math & Logic</h3>
+          <span class="text-[10px] font-bold text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-md">Grades K–5</span>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">Addition, subtraction, multiplication tables, word problems, and math games that make numbers fun.</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 p-5 sm:p-6 rounded-2xl hover:border-amber-400 transition">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-3 sm:mb-4">
+            <i data-lucide="book-open-check" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Reading & Literacy</h3>
+          <span class="text-[10px] font-bold text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-md">Early Reading</span>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">Phonics, vocabulary expansion, guided reading, and comprehension for primary schoolers.</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 p-5 sm:p-6 rounded-2xl hover:border-amber-400 transition">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-3 sm:mb-4">
+            <i data-lucide="pencil" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Homework Assistance</h3>
+          <span class="text-[10px] font-bold text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-md">Calgary Curriculum</span>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">Helping kids complete daily homework without tears or frustration before bedtime.</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 p-5 sm:p-6 rounded-2xl hover:border-amber-400 transition">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-amber-100 text-amber-800 flex items-center justify-center mb-3 sm:mb-4">
+            <i data-lucide="brain" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1">Spelling & Writing</h3>
+          <span class="text-[10px] font-bold text-amber-700 bg-amber-100/80 px-2 py-0.5 rounded-md">Ages 5–10</span>
+          <p class="text-xs text-slate-600 mt-2.5 leading-relaxed">Pencil grip, sentence building, creative writing prompts, and spelling list practice.</p>
+        </div>
+
+      </div>
+
+      <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-10 lg:p-12 border border-slate-800 relative overflow-hidden">
+        <div class="relative z-10 max-w-2xl space-y-3.5 sm:space-y-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-400">Flexible Options</span>
+          <h3 class="text-xl sm:text-3xl lg:text-4xl font-black">Standalone Tutoring or Sitting Combo</h3>
+          <p class="text-xs sm:text-sm text-slate-300 leading-relaxed">
+            Text Nash directly to book <strong>Standalone Tutoring for $20/hr per kid</strong>, or add homework help to your sitting session for just <strong>+$10/hr extra per kid ($32/hr total per kid)</strong>.
+          </p>
+          <div class="pt-2 flex flex-col sm:flex-row gap-2.5 sm:gap-3">
+            <button onclick="sendTextBooking('Tutoring')" class="bg-amber-500 hover:bg-amber-600 text-slate-950 font-black px-5 py-3 rounded-xl transition text-xs sm:text-sm shadow-md text-center cursor-pointer flex items-center justify-center gap-1.5">
+              <i data-lucide="message-square" class="w-4 h-4 text-slate-950"></i>
+              <span>Text Tutoring Booking ($20/hr/kid)</span>
+            </button>
+            <button onclick="sendTextBooking('Combo')" class="bg-slate-800 hover:bg-slate-700 text-white font-bold px-5 py-3 rounded-xl transition text-xs sm:text-sm border border-slate-700 text-center cursor-pointer flex items-center justify-center gap-1.5">
+              <i data-lucide="message-square" class="w-4 h-4 text-amber-400"></i>
+              <span>Text Combo Booking ($32/hr/kid)</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Hours of Operation Section -->
+  <section id="hours" class="py-16 sm:py-20 bg-stone-100/80 border-t border-stone-200 scroll-mt-20">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-8 sm:mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-700">Weekly Schedule</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">Hours of Operation</h2>
+        <p class="text-slate-600 text-xs sm:text-sm mt-1.5">Serving Calgary families 7 days a week during the following time blocks.</p>
+      </div>
+
+      <div class="max-w-3xl mx-auto bg-white border border-stone-200 rounded-3xl p-5 sm:p-8 shadow-md">
+        <div class="grid sm:grid-cols-2 gap-3 sm:gap-4 text-xs sm:text-sm font-semibold">
+          
+          <div class="bg-stone-50 p-3.5 sm:p-4 rounded-2xl border border-stone-200 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <i data-lucide="calendar-days" class="w-4 h-4 text-amber-600"></i>
+              <span class="text-slate-800">Mon – Thu</span>
+            </div>
+            <span class="text-xs font-extrabold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg">4:30 PM – 8:30 PM</span>
+          </div>
+
+          <div class="bg-stone-50 p-4 rounded-2xl border border-stone-200 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <i data-lucide="calendar-days" class="w-4 h-4 text-amber-600"></i>
+              <span class="text-slate-800">Friday</span>
+            </div>
+            <span class="text-xs font-extrabold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg">1:00 PM – 9:30 PM</span>
+          </div>
+
+          <div class="bg-stone-50 p-4 rounded-2xl border border-stone-200 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <i data-lucide="calendar-days" class="w-4 h-4 text-amber-600"></i>
+              <span class="text-slate-800">Saturday</span>
+            </div>
+            <span class="text-xs font-extrabold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg">12:00 PM – 9:30 PM</span>
+          </div>
+
+          <div class="bg-stone-50 p-4 rounded-2xl border border-stone-200 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+              <i data-lucide="calendar-days" class="w-4 h-4 text-amber-600"></i>
+              <span class="text-slate-800">Sunday</span>
+            </div>
+            <span class="text-xs font-extrabold bg-amber-100 text-amber-900 px-2.5 py-1 rounded-lg">12:00 PM – 8:30 PM</span>
+          </div>
+
+        </div>
+
+        <div class="mt-5 pt-4 border-t border-stone-100 text-center">
+          <p class="text-xs text-slate-500">Need custom timing? Feel free to call/text <a href="tel:4038991550" class="font-bold text-slate-800 underline">403-899-1550</a>!</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Rate Estimator -->
+  <section id="calculator" class="py-16 sm:py-24 bg-white border-t border-stone-200 scroll-mt-20">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        
+        <div class="lg:col-span-5 space-y-4">
+          <span class="text-xs font-bold uppercase tracking-widest text-amber-700">Transparent CAD Pricing</span>
+          <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">Rate Calculator</h2>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Calculate your exact session price below based on service type, start/end times, and number of children.
+          </p>
+
+          <div class="space-y-2.5 pt-2">
+            <div class="flex items-start gap-3">
+              <div class="p-2 rounded-lg bg-amber-100 text-amber-800 font-bold text-xs mt-0.5">🧸</div>
+              <div>
+                <h4 class="text-xs sm:text-sm font-bold text-slate-900">Standard Babysitting</h4>
+                <p class="text-[11px] sm:text-xs text-slate-500">$22/hr per child in Calgary (Available Sept 15+).</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="p-2 rounded-lg bg-blue-100 text-blue-800 font-bold text-xs mt-0.5">📚</div>
+              <div>
+                <h4 class="text-xs sm:text-sm font-bold text-slate-900">Standalone Tutoring</h4>
+                <p class="text-[11px] sm:text-xs text-slate-500">$20/hr per child for dedicated learning (Available Sept 15+).</p>
+              </div>
+            </div>
+            <div class="flex items-start gap-3">
+              <div class="p-2 rounded-lg bg-emerald-100 text-emerald-800 font-bold text-xs mt-0.5">✨</div>
+              <div>
+                <h4 class="text-xs sm:text-sm font-bold text-slate-900">Babysitting + Tutoring Combo</h4>
+                <p class="text-[11px] sm:text-xs text-slate-500">$32/hr per child total ($22/hr sitting + $10/hr tutoring add-on).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-7 bg-stone-50 border border-stone-200 rounded-3xl p-5 sm:p-8 shadow-lg">
+          <div class="space-y-5 sm:space-y-6">
+            
+            <div>
+              <label class="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Select Service Type</label>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <label class="flex flex-col p-3 bg-white border border-stone-200 rounded-xl cursor-pointer hover:border-amber-400 transition">
+                  <div class="flex items-center gap-2">
+                    <input type="radio" name="calcService" value="care_only" onchange="updateCalculator()" class="text-amber-600 focus:ring-amber-500">
+                    <span class="text-xs font-bold text-slate-900">Babysitting</span>
+                  </div>
+                  <span class="text-[10px] text-slate-500 font-semibold mt-1">$22 / hr per child</span>
+                </label>
+
+                <label class="flex flex-col p-3 bg-white border border-stone-200 rounded-xl cursor-pointer hover:border-amber-400 transition">
+                  <div class="flex items-center gap-2">
+                    <input type="radio" name="calcService" value="tutoring_only" onchange="updateCalculator()" class="text-amber-600 focus:ring-amber-500">
+                    <span class="text-xs font-bold text-slate-900">Tutoring Only</span>
+                  </div>
+                  <span class="text-[10px] text-amber-700 font-semibold mt-1">$20 / hr per child</span>
+                </label>
+
+                <label class="flex flex-col p-3 bg-white border border-stone-200 rounded-xl cursor-pointer hover:border-amber-400 transition">
+                  <div class="flex items-center gap-2">
+                    <input type="radio" name="calcService" value="combo" onchange="updateCalculator()" class="text-amber-600 focus:ring-amber-500" checked>
+                    <span class="text-xs font-bold text-slate-900">Sitting + Tutoring</span>
+                  </div>
+                  <span class="text-[10px] text-emerald-700 font-semibold mt-1">$32 / hr per child</span>
+                </label>
+              </div>
+            </div>
+
+            <div>
+              <div class="flex justify-between items-center mb-2">
+                <label class="text-xs sm:text-sm font-bold text-slate-800">Number of Children</label>
+                <span id="kidsValue" class="text-xs sm:text-sm font-extrabold text-amber-700 bg-amber-100 px-3 py-1 rounded-full">1 Child</span>
+              </div>
+              <input type="range" id="kidsSlider" min="1" max="4" value="1" oninput="updateCalculator()" class="w-full accent-amber-600 h-2 bg-stone-200 rounded-lg appearance-none cursor-pointer">
+            </div>
+
+            <div class="grid grid-cols-2 gap-2 sm:gap-3">
+              <div>
+                <label class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Start Time</label>
+                <input type="time" id="calcStartTime" value="17:00" onchange="updateCalculator()" class="w-full bg-white border border-stone-200 rounded-xl px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+              </div>
+              <div>
+                <label class="block text-[11px] sm:text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">End Time</label>
+                <input type="time" id="calcEndTime" value="20:00" onchange="updateCalculator()" class="w-full bg-white border border-stone-200 rounded-xl px-3 sm:px-4 py-2.5 text-xs sm:text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-amber-500">
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-stone-200 text-xs font-bold">
+              <span class="text-slate-500 uppercase text-[10px] sm:text-xs">Calculated Duration:</span>
+              <span id="calcDurationText" class="text-slate-900 font-extrabold text-xs sm:text-sm">3.0 Hours</span>
+            </div>
+
+            <div class="bg-slate-900 text-white p-5 sm:p-6 rounded-2xl flex flex-col sm:flex-row justify-between items-center gap-4">
+              <div class="text-center sm:text-left">
+                <span class="text-[10px] sm:text-xs text-slate-400 uppercase font-bold tracking-wider">Estimated Total</span>
+                <div class="flex items-baseline justify-center sm:justify-start gap-1 sm:gap-2">
+                  <span id="calcTotal" class="text-2xl sm:text-3xl font-black text-amber-400">$96.00</span>
+                  <span class="text-xs text-slate-400">CAD</span>
+                </div>
+                <p id="calcRateBreakdown" class="text-[11px] sm:text-xs text-slate-400 mt-1">$32/hr per child ($32/hr total for 1 child)</p>
+              </div>
+
+              <button onclick="sendTextBooking('Calculated')" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-slate-950 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm transition shadow-md cursor-pointer flex items-center justify-center gap-1.5">
+                <i data-lucide="message-square" class="w-4 h-4 text-slate-950"></i>
+                <span>Text Estimate to Nash</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Red Cross Certification Section -->
+  <section id="certifications" class="py-16 sm:py-20 bg-stone-100/70 border-t border-stone-200 scroll-mt-20">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+        <span class="text-xs font-bold uppercase tracking-widest text-rose-600">Official Standards</span>
+        <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mt-1">Red Cross Certified Care</h2>
+        <p class="text-slate-600 text-xs sm:text-sm mt-2">Trained specifically to handle child safety, first aid, and structured care routines.</p>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-4 sm:gap-6">
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200">
+          <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-700 flex items-center justify-center font-bold mb-3.5">
+            <i data-lucide="award" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base mb-1.5">Red Cross Babysitting Course</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Official certification covering child supervision, emergency protocol, safety rules, and injury prevention.</p>
+        </div>
+
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200">
+          <div class="w-10 h-10 rounded-xl bg-amber-100 text-amber-800 flex items-center justify-center font-bold mb-3.5">
+            <i data-lucide="heart-pulse" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-sm sm:text-base mb-1.5">First Aid Readiness</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Trained to respond calmly and effectively to minor injuries, cuts, bumps, and safety scenarios.</p>
+        </div>
+
+        <div class="bg-white p-5 sm:p-6 rounded-2xl border border-stone-200">
+          <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold mb-3.5">
+            <i data-lucide="thumbs-up" class="w-5 h-5"></i>
+          </div>
+          <h3 class="font-bold text-slate-900 text-base mb-1.5">Calgary Family Approved</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Active hands-on experience caring for local kids across Calgary neighborhoods.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="py-16 sm:py-20 bg-white border-t border-stone-200 scroll-mt-20">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-8 sm:mb-12">
+        <span class="text-xs font-bold uppercase tracking-widest text-amber-700">FAQ</span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-1">Frequently Asked Questions</h2>
+      </div>
+
+      <div class="space-y-3 sm:space-y-4">
+        <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <h3 class="font-bold text-slate-900 text-xs sm:text-sm mb-1.5">Who will actually be babysitting or tutoring my kids?</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Me (Nash McGregor, 11 years old) directly! I am a solo caregiver, so you never have to worry about strangers or random substitutes coming to your house.</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <h3 class="font-bold text-slate-900 text-xs sm:text-sm mb-1.5">When are babysitting and tutoring available?</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Both babysitting and tutoring are fully booked until <strong>September 15</strong>. Advance booking requests for dates starting September 15 and beyond are welcome anytime!</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <h3 class="font-bold text-slate-900 text-xs sm:text-sm mb-1.5">What are your hours of operation?</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            • <strong>Mon–Thu:</strong> 4:30 PM – 8:30 PM<br/>
+            • <strong>Friday:</strong> 1:00 PM – 9:30 PM<br/>
+            • <strong>Saturday:</strong> 12:00 PM – 9:30 PM<br/>
+            • <strong>Sunday:</strong> 12:00 PM – 8:30 PM
+          </p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <h3 class="font-bold text-slate-900 text-xs sm:text-sm mb-1.5">What happens when I click to book?</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Clicking any booking button instantly opens your phone's SMS messaging app pre-filled with a text message to Nash at 403-899-1550!</p>
+        </div>
+
+        <div class="bg-stone-50 border border-stone-200 rounded-2xl p-4 sm:p-5 shadow-sm">
+          <h3 class="font-bold text-slate-900 text-xs sm:text-sm mb-1.5">How much does tutoring cost?</h3>
+          <p class="text-xs text-slate-600 leading-relaxed">Standalone elementary tutoring (Ages ≤10) is <strong>$20/hour per child</strong>. If you add tutoring onto a babysitting session, it is only <strong>+$10/hour per child extra</strong> ($32/hour per child total for the combined session).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-slate-950 text-slate-400 py-10 sm:py-12 border-t border-slate-800">
+    <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-5">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-amber-500 text-slate-950 flex items-center justify-center font-black text-base">
+          N
+        </div>
+        <span class="text-base sm:text-lg font-bold text-white">nooksitters.github.io</span>
+      </div>
+      <p class="text-xs text-slate-500">© 2026 nooksitters.github.io. Run exclusively by Nash McGregor (11 Y/O).</p>
+      <div class="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs font-semibold text-slate-400">
+        <a href="tel:4038991550" class="hover:text-amber-400 flex items-center gap-1.5 transition text-slate-300">
+          <i data-lucide="phone" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>403-899-1550</span>
+        </a>
+        <a href="mailto:nashnooksitters@gmail.com" class="hover:text-amber-400 flex items-center gap-1.5 transition text-slate-300">
+          <i data-lucide="mail" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>nashnooksitters@gmail.com</span>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Sticky Floating Bar -->
+  <div class="fixed bottom-0 left-0 right-0 z-30 bg-white/95 backdrop-blur-md border-t border-stone-200 p-3 flex items-center gap-2 md:hidden shadow-lg">
+    <a href="tel:4038991550" class="p-3 bg-stone-100 text-slate-900 rounded-xl font-bold flex items-center justify-center">
+      <i data-lucide="phone" class="w-5 h-5 text-amber-600"></i>
+    </a>
+    <button onclick="sendTextBooking('Care')" class="flex-1 bg-amber-500 active:bg-amber-600 text-slate-950 font-extrabold py-3 rounded-xl text-xs sm:text-sm transition shadow-sm text-center cursor-pointer flex items-center justify-center gap-1.5">
+      <i data-lucide="message-square" class="w-4 h-4 text-slate-950"></i>
+      <span>Text Nash to Book (403-899-1550)</span>
+    </button>
+  </div>
+
+  <!-- Synchronous Core Script -->
+  <script>
+    function sendTextBooking(serviceType = 'Care') {
+      const phoneNumber = "4038991550";
+      let textMessage = "Hi Nash! I'd like to book a babysitting session ($22/hr per kid) with NookSitters for a date after Sept 15.";
+      
+      if (serviceType === 'Tutoring') {
+        textMessage = "Hi Nash! I'd like to book an elementary tutoring session ($20/hr per kid) with NookSitters for a date after Sept 15.";
+      } else if (serviceType === 'Combo') {
+        textMessage = "Hi Nash! I'd like to book a Babysitting + Tutoring Combo session ($32/hr per kid) with NookSitters for a date after Sept 15.";
+      } else if (serviceType === 'Calculated') {
+        const duration = document.getElementById("calcDurationText")?.innerText || "3.0 Hours";
+        const total = document.getElementById("calcTotal")?.innerText || "$96.00";
+        const kids = document.getElementById("kidsValue")?.innerText || "1 Child";
+        textMessage = `Hi Nash! I calculated an estimate on nooksitters.github.io for ${kids}, ${duration} (${total} est total). I'd like to check your availability for a session after Sept 15!`;
+      }
+
+      const encodedText = encodeURIComponent(textMessage);
+      window.location.href = `sms:${phoneNumber}?body=${encodedText}`;
+      showToast("📱 Opening Text Messaging to 403-899-1550...");
+    }
+    window.sendTextBooking = sendTextBooking;
+
+    function scrollToSection(sectionId) {
+      const el = document.getElementById(sectionId);
+      if (el) {
+        const yOffset = -80;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+      const menuDropdown = document.getElementById("navDropdownMenu");
+      if (menuDropdown && !menuDropdown.classList.contains("hidden")) {
+        toggleMenuDropdown();
+      }
+    }
+
+    function toggleMenuDropdown() {
+      const menu = document.getElementById("navDropdownMenu");
+      const menuIcon = document.getElementById("menuIcon");
+      if (!menu) return;
+
+      const isHidden = menu.classList.contains("hidden");
+      if (isHidden) {
+        menu.classList.remove("hidden");
+        if (menuIcon) menuIcon.setAttribute("data-lucide", "x");
+      } else {
+        menu.classList.add("hidden");
+        if (menuIcon) menuIcon.setAttribute("data-lucide", "menu");
+      }
+      if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+      }
+    }
+    window.toggleMenuDropdown = toggleMenuDropdown;
+
+    function updateCalculator() {
+      const kids = parseInt(document.getElementById("kidsSlider").value) || 1;
+      const startTime = document.getElementById("calcStartTime").value;
+      const endTime = document.getElementById("calcEndTime").value;
+      
+      let hours = 3;
+      if (startTime && endTime) {
+        const [sH, sM] = startTime.split(':').map(Number);
+        const [eH, eM] = endTime.split(':').map(Number);
+        let diff = (eH + eM/60) - (sH + sM/60);
+        if (diff > 0) hours = Math.round(diff * 10) / 10;
+      }
+
+      document.getElementById("calcDurationText").innerText = `${hours} Hours`;
+
+      const serviceRadio = document.querySelector('input[name="calcService"]:checked');
+      const serviceType = serviceRadio ? serviceRadio.value : 'combo';
+
+      let perChildRate = 22;
+
+      if (serviceType === 'tutoring_only') {
+        perChildRate = 20;
+      } else if (serviceType === 'combo') {
+        perChildRate = 32;
+      } else {
+        perChildRate = 22;
+      }
+
+      const totalHourlyRate = perChildRate * kids;
+      const grandTotal = totalHourlyRate * hours;
+
+      let breakdownText = `$${perChildRate}/hr per child ($${totalHourlyRate}/hr total for ${kids} ${kids === 1 ? 'child' : 'children'})`;
+
+      document.getElementById("kidsValue").innerText = `${kids} ${kids === 1 ? 'Child' : 'Children'}`;
+      document.getElementById("calcTotal").innerText = `$${grandTotal.toFixed(2)}`;
+      document.getElementById("calcRateBreakdown").innerText = breakdownText;
+    }
+
+    function showToast(message) {
+      const container = document.getElementById("toastContainer");
+      const toast = document.createElement("div");
+      toast.className = "bg-slate-900 text-white text-xs font-bold px-4 py-3 rounded-2xl shadow-xl flex items-center gap-2 pointer-events-auto border border-slate-700 animate-bounce max-w-sm";
+      toast.innerHTML = `<span>${message}</span>`;
+      
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 5000);
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      updateCalculator();
+      if (typeof lucide !== 'undefined' && lucide.createIcons) {
+        lucide.createIcons();
+      }
+    });
+  </script>
+</body>
+</html>
